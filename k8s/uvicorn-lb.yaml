@@ -1,0 +1,13 @@
+# k8s/uvicorn-lb.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: uvicorn-lb
+spec:
+  selector:
+    app: uvicorn-app
+  ports:
+  - protocol: TCP
+    port: 80   # Expose externally on port 80
+    targetPort: 8000  # Forward traffic to FastAPI’s internal port
+  type: LoadBalancer  # External access via LoadBalancer

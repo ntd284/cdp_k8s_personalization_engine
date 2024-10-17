@@ -1,0 +1,23 @@
+# k8s/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qdrant-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # Only one pod can write at a time
+  resources:
+    requests:
+      storage: 10Gi  # 10Gi of persistent storage for Qdrant
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: uvicorn-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi  # 5Gi of persistent storage for FastAPI

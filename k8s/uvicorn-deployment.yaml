@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uvicorn-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uvicorn-app
+  template:
+    metadata:
+      labels:
+        app: uvicorn-app
+    spec:
+      containers:
+      - name: uvicorn-app
+        image: ntd284/uvicorn-app:latest  # Ensure the image is valid
+        ports:
+        - containerPort: 8000  # FastAPI app port
+        env:  # Add environment variables here
+        - name: QDRANT_HOST
+          value: "qdrant"  # Qdrant service name in Kubernetes
+        - name: QDRANT_PORT
+          value: "6333"  # Qdrant port in Kubernetes
+        - name: REDIS_HOST
+          value: "redis"  # Redis service name in Kubernetes
+        - name: REDIS_PORT
+          value: "6379"  # Redis port in Kubernetes
+        volumeMounts:
+        - name: uvicorn-source
+          mountPath: /src  # Path in the container for the app files
+      volumes:
+      - name: uvicorn-source
+        persistentVolumeClaim:
+          claimName: uvicorn-pvc  # Reference to the PVC for FastAPI
