@@ -18,7 +18,6 @@ spec:
         image: qdrant/qdrant
         ports:
         - containerPort: 6333
-        - containerPort: 6334
         volumeMounts:
         - name: qdrant-storage
           mountPath: /qdrant/storage
@@ -40,8 +39,6 @@ spec:
     protocol: TCP
     port: 6333
     targetPort: 6333
-  - name: grpc   # Adding a name for the second port (gRPC)
-    protocol: TCP
-    port: 6334
-    targetPort: 6334
-  type: ClusterIP
+    nodePort: 30090    # External port (must be in the 30000-32767 range)
+
+  type: NodePort

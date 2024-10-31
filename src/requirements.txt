@@ -28,3 +28,4 @@ ctransformers[cuda]
 sentence-transformers
 
 qdrant-client
+# requests
